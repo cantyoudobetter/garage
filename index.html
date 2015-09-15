@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+
+        </style>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="apple-touch-icon" sizes="57x57" href="apple-icon-57x57px.png" />
+        <link rel="apple-touch-icon" sizes="114x114" href="apple-icon-114x114px.png" />
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+
+        <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+    </head>
+    <body>
+        <div data-role="page" id="MainPageView" data-theme="a">
+            <div data-role="header" data-position="fixed">
+                <h1>Garage Opener</h1>
+            </div>
+            <div data-role="main" class="ui-content">
+                <form method="post" action="">
+                    <button name="ClickButton" id="button">Garage Button</button>
+                </form>
+            </div>
+            <div data-role="footer" style="text-align:center;">
+                
+            </div>
+        </div>         
+    <script>
+        $(document).on("pagecreate", "#MainPageView", function(){
+                
+                    $("#button").click( function()
+                    {
+                        $.get( "o.php", function( data ) {
+                            alert( "garage triggered" );
+                            location.reload();
+                        });
+                    });
+        });
+
+
+        $('#MainPageView').on('pageinit', function(){
+
+        });
+
+    </script>
+
+     
+</body>
