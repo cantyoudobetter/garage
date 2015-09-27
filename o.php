@@ -1,9 +1,4 @@
 <?php
-        //PI Version
-	$comPort = "/dev/ttyACM0"; /*change to correct com port */
-  	$fp =fopen($comPort, "w");
-  	fwrite($fp, "O"); /* this is the number that it will write */
-  	fclose($fp);
-  	echo("opening or closing");
-
+//$response = http_get("http://192.168.1.40/?pin=ON1", array("timeout"=>1), $info);
+file_get_contents("http://192.168.1.40/?pin=ON1");
 ?>

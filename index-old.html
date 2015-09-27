@@ -18,12 +18,9 @@
                 <h1>Garage Opener</h1>
             </div>
             <div data-role="main" class="ui-content">
-		<div>
-                    <button name="ClickButton" id="sbutton"><div id="status">Getting Status...</div></button>
-		</div>
-                <div>
+                <form method="post" action="">
                     <button name="ClickButton" id="button">Garage Button</button>
-                </div>
+                </form>
             </div>
             <div data-role="footer" style="text-align:center;">
                 
@@ -31,25 +28,7 @@
         </div>         
     <script>
         $(document).on("pagecreate", "#MainPageView", function(){
-
-		getStatus();
-		
-		function getStatus() {
-		      	$.get("s.php", function(data){
-  				//alert("Data: " + data);
-				var outVal = "CLOSED";
-				var d = data.charAt(0);
-				if (d == "1") outVal = "OPEN"; 
-				var status = 'The Garage is ' + outVal; 
-				$('#status').html( status );
-			});
-		}
-
-                    $("#sbutton").click( function()
-                    {
-			getStatus();
-                    });
-
+                
                     $("#button").click( function()
                     {
                         $.get( "o.php", function( data ) {
