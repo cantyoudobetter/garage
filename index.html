@@ -15,15 +15,24 @@
     <body>
         <div data-role="page" id="MainPageView" data-theme="a">
             <div data-role="header" data-position="fixed">
-                <h1>Garage Opener</h1>
+                <h1>Bordelon WOW!</h1>
             </div>
             <div data-role="main" class="ui-content">
 		<div>
-                    <button name="ClickButton" id="sbutton"><div id="status">Getting Status...</div></button>
+		<h3 class="ui-bar ui-bar-a ui-corner-all"><span id="weather">Getting Weather Data...</span></h3>
+		</div>
+
+		<div>
+                    <button name="ClickButton" id="sbutton"><div id="status">Getting Garage Status...</div></button>
 		</div>
                 <div>
                     <button name="ClickButton" id="button">Garage Button</button>
                 </div>
+		<br>
+		<br>
+		<div>
+                    <button name="ClickButton" id="sp_sbutton"><div id="sp_status">Getting Sprinkler Status...</div></button>
+		</div>
             </div>
             <div data-role="footer" style="text-align:center;">
                 
@@ -33,7 +42,8 @@
         $(document).on("pagecreate", "#MainPageView", function(){
 
 		getStatus();
-		
+		getSprinklerStatus();
+		getWeather();
 		function getStatus() {
 		      	$.get("s.php", function(data){
   				//alert("Data: " + data);
@@ -44,11 +54,40 @@
 				$('#status').html( status );
 			});
 		}
+		function getWeather() {
+		      	$.get("w.php", function(data){
+				$('#weather').html( data );
+			});
+		}
+
+		function getSprinklerStatus() {
+		      	$.get("sprinkler_status.php", function(data){
+				var outVal = "ON";
+				var d = data.charAt(0);
+				if (d == "1") outVal = "OFF"; 
+				var status = 'The Sprinkler is ' + outVal; 
+				$('#sp_status').html( status );
+			});
+		}
+
+		function getSprinklerFlip() {
+		      	$.get("sprinkler_flip.php", function(data){
+				var outVal = "ON";
+				var d = data.charAt(0);
+				if (d == "1") outVal = "OFF"; 
+				var status = 'The Sprinkler is ' + outVal; 
+				$('#sp_status').html( status );
+			});
+			
+		
+		}
 
                     $("#sbutton").click( function()
                     {
 			getStatus();
                     });
+
+
 
                     $("#button").click( function()
                     {
@@ -57,6 +96,13 @@
                             location.reload();
                         });
                     });
+
+                    $("#sp_sbutton").click( function()
+                    {
+			getSprinklerFlip();
+                    });
+
+
         });
 
 
