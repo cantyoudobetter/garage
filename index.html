@@ -11,6 +11,19 @@
 
         <script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
         <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+        <script src="http://static.pureexample.com/js/flot/excanvas.min.js"></script>
+        <script src="http://static.pureexample.com/js/flot/jquery.flot.min.js"></script>
+
+        <!-- CSS -->
+        <style type="text/css">
+        #flotcontainer {
+            width: 350px;
+            height: 200px;
+            text-align: center;
+            margin: 0 auto;
+        }
+        </style>
+
     </head>
     <body>
         <div data-role="page" id="MainPageView" data-theme="a">
@@ -18,41 +31,45 @@
                 <h1>Bordelon WOW!</h1>
             </div>
             <div data-role="main" class="ui-content">
-		<div>
-		<h3 class="ui-bar ui-bar-a ui-corner-all"><span id="weather">Getting Weather Data...</span></h3>
-		</div>
+        <div>
+        <h3 class="ui-bar ui-bar-a ui-corner-all"><span id="weather">Getting Weather Data...</span></h3>
+        </div>
 
-		<div>
+        <div>
                     <button name="ClickButton" id="sbutton"><div id="status">Getting Garage Status...</div></button>
-		</div>
+        </div>
                 <div>
                     <button name="ClickButton" id="button">Garage Button</button>
                 </div>
-		<br>
-		<br>
-		<div>
+        <br>
+        <br>
+        <div>
                     <button name="ClickButton" id="sp_sbutton"><div id="sp_status">Getting Sprinkler Status...</div></button>
-		</div>
+        </div>
             </div>
             <div data-role="footer" style="text-align:center;">
                 
             </div>
-        </div>         
-        <div data-role="page" id="WeatherView" data-theme="a">
+        </div>    
+
+
+
+
+        <div data-role="page" id="WeatherPageView" data-theme="a">
             <div data-role="header" data-position="fixed">
-                <h1>Bordelon Weather</h1>
+                <h1>Bordelon WOW!</h1>
             </div>
             <div data-role="main" class="ui-content">
-		<div>
+        <div>
+            <div id="flotcontainer"></div>
+        </div>
 
-
-		</div>
-
-            </div>
+        </div>
             <div data-role="footer" style="text-align:center;">
                 
             </div>
-        </div>         
+        </div>    
+
     <script>
         $(document).on("pagecreate", "#MainPageView", function(){
 
@@ -124,6 +141,51 @@
         $('#MainPageView').on('pageinit', function(){
 
         });
+
+        $(document).on("pagecreate", "#WeatherPageView", function(){
+
+            $.ajax({
+                    type: "GET",
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    url: 'wtget.php',
+                    error: function () {
+                        alert("An error occurred.");
+                    },
+                    success: function (data) {
+                        //alert("Success.");
+
+                        var dataset = [{ "label":"Temperature", "data":data}];
+
+                        var options = {
+                            series: {
+                                points: {
+                                    show: true
+                                },
+                                lines: {
+                                    show: true
+                                }
+
+                            },
+                        xaxis: {
+                            mode: "time",
+                    twelveHourClock: true,
+                            timeformat: "%0m/%0d %H %p"
+                            },
+                            grid: {
+                            backgroundColor: { colors: ["#B0D5FF", "#5CA8FF"] }
+                            }
+                        };
+        //      var series = [{"label":"Scores","data":[[1999,3],[2000,3.9],[2001,2],[2002,1.2]]}];
+                        $.plot($("#flotcontainer"), dataset, options);
+        //                $.plot($("#flotcontainer"), series);
+                    }
+                });
+
+        });
+
+
+
 
     </script>
 
