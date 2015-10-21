@@ -32,9 +32,8 @@
             </div>
             <div data-role="main" class="ui-content">
         <div>
-        <h3 class="ui-bar ui-bar-a ui-corner-all"><span id="weather">Getting Weather Data...</span></h3>
+        <h3 class="ui-bar ui-bar-a ui-corner-all"><a href="#WeatherPageView" data-transition="flip"><span id="weatherdht">Getting Weather Data...</span></a></h3>
         </div>
-
         <div>
                     <button name="ClickButton" id="sbutton"><div id="status">Getting Garage Status...</div></button>
         </div>
@@ -56,16 +55,17 @@
 
 
         <div data-role="page" id="WeatherPageView" data-theme="a">
-            <div data-role="header" data-position="fixed">
-                <h1>Bordelon WOW!</h1>
+            <div data-role="header" data-position="fixed" data-add-back-btn="true">
+                <h1>Weather History</h1>
             </div>
             <div data-role="main" class="ui-content">
-        <div>
-            <div id="flotcontainer"></div>
-        </div>
+        
+               <div id="flotcontainer"></div>
+           
 
-        </div>
-            <div data-role="footer" style="text-align:center;">
+            </div>
+            </br>
+	    <div data-role="footer" style="text-align:center;">
                 
             </div>
         </div>    
@@ -75,7 +75,8 @@
 
 		getStatus();
 		getSprinklerStatus();
-		getWeather();
+		//getWeather();
+		getDHTWeather();
 		function getStatus() {
 		      	$.get("s.php", function(data){
   				//alert("Data: " + data);
@@ -89,6 +90,11 @@
 		function getWeather() {
 		      	$.get("w.php", function(data){
 				$('#weather').html( data );
+			});
+		}
+		function getDHTWeather() {
+		      	$.get("wdht.php", function(data){
+				$('#weatherdht').html( data );
 			});
 		}
 
@@ -114,25 +120,25 @@
 		
 		}
 
-                    $("#sbutton").click( function()
-                    {
-			getStatus();
-                    });
+        $("#sbutton").click( function()
+            {
+	       		getStatus();
+             });
 
 
 
-                    $("#button").click( function()
-                    {
-                        $.get( "o.php", function( data ) {
+        $("#button").click( function()
+            {
+                $.get( "o.php", function( data ) {
                             alert( "garage triggered" );
-                            location.reload();
-                        });
-                    });
+                            //location.reload();
+            });
+        });
 
-                    $("#sp_sbutton").click( function()
-                    {
-			getSprinklerFlip();
-                    });
+        $("#sp_sbutton").click( function()
+        {
+    		getSprinklerFlip();
+        });
 
 
         });
